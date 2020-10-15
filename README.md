@@ -1,4 +1,4 @@
-# zoomer
+# music_slider
 [![pub package](https://img.shields.io/pub/v/music_slider.svg)](https://pub.dartlang.org/packages/music_slider)
 
 MusicSlider - To Create Music Styled Wavy SeekBar
@@ -37,10 +37,24 @@ Follow Installation guide of Pub.dev
       this.initialTime = 0.0                                     // Initial Time For Animation when Starts
       });
       ```
+* Important Points
+      - You have to give Controller
+      - Give boxSpace 1.0 if you dont want to space in between bars
+      - fullBoxFill = false allows to filling by precise value (eg. Not Like Default Filling Entire Box With Color)
+      - Make detectGesture = false if you are making ProgressBar
+      - You can give any numbers of colors to active/ inactive portion. It will Cycles the List.
+      - Dont Forget to make animateWaveByTime = false if you Dont want animated Slider (eg No Time Included In Wavw Function)
 
-2. ZoomerController Class
-
-          ZoomerController({initialScale = 1.0})  //To Set initial Scale
+### Wave Function
+    ```wave: (x,t,a) => a*sin(x*0.3-t*0.3)*sin(x*0.3+t*0.3)```
+    
+    Here, x = Bar Count as X-axis
+          t = Time
+          a = Amplitude of Wave
+     
+     - If You Dont Know What Wave Function Is, then Copy Your Desired Function From Example Code.
+     
+2. MusicController Class
           
 ## Example
 
