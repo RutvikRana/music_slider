@@ -47,7 +47,7 @@ Follow Installation guide of Pub.dev
       * Dont Forget to make animateWaveByTime = false if you Dont want animated Slider (eg No Time Included In Wavw Function)
 
 ### Wave Function
-    ```wave: (x,t,a) => a*sin(x*0.3-t*0.3)*sin(x*0.3+t*0.3)```
+    wave: (x,t,a) => a*sin(x*0.3-t*0.3)*sin(x*0.3+t*0.3)
     
     Here, x = Bar Count as X-axis
           t = Time
@@ -56,7 +56,30 @@ Follow Installation guide of Pub.dev
      - If You Dont Know What Wave Function Is, then Copy Your Desired Function From Example Code.
      
 2. MusicController Class
-          
+``` 
+   MusicSliderController({
+      double initialValue = 0.0   // To Give initial Value To Slider. Should Be In Range (0 - 1)
+    })
+```
+### APIs
+* double get value                   <br>- Get current value of MusicSlider<br>
+``` value = _controller.value```
+
+* seekTo(double value)               <br>- Change Value of MusicSlider<br>
+``` _controller.seekTo(0.3)```
+
+ * animateByTime(bool value)         <br>- Start/Stop Animation<br>
+ ``` _controller.animateByTime(false)```
+
+ * onSliderChange()                  <br>- Add Callback on SliderChange Event<br>
+ ``` _controller.onSliderChange( ()=>print(_controller.value) )```
+
+ * onSliderStart()                   <br>- Add Callback on SliderChange Start Event<br>
+ ``` _controller.onSliderStart( ()=>print(_controller.value) )```
+
+ * onSliderEnd()                     <br>- Add Callback on SliderChange End Event<br>
+ ``` _controller.onSliderEnd( ()=>print(_controller.value) )```
+
 ## Example
 
 ```
