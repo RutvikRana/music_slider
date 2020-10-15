@@ -1,109 +1,81 @@
 # zoomer
-[![pub package](https://img.shields.io/pub/v/zoomer.svg)](https://pub.dartlang.org/packages/zoomer)
+[![pub package](https://img.shields.io/pub/v/music_slider.svg)](https://pub.dartlang.org/packages/music_slider)
 
-Zoomer - To Zoom Any Widget
+MusicSlider - To Create Music Styled Wavy SeekBar
 
 ## preview
-<img src="https://raw.githubusercontent.com/RutvikRana/zoomer/main/video_example/96.gif" alt="" width="200" height="200">
+<img src="https://raw.githubusercontent.com/RutvikRana/music_slider/main/video_example/giffy.gif" alt="Example App" width="300" height="300">
 
 ## What It Can Do?
-* Zoom
-* Rotate
-* Translate
+* Create Default Music Slider
+* Create Custom Music Slider By Given Wave Function
+* Create Animated Music Slider
+* Create ProgressBar By Making detectGesture false
+* Create Square Slider Bar
+* Create Anything with Wave Function ( I honestly dont know Its capability :) )
 
 ## Installation
 Follow Installation guide of Pub.dev
 
 ## Syntax
 
-1. Zoomer Class
-
-        Zoomer(
-            {this.child,                    // Child Can Be Any Widget, you want to make zoomable
-            this.controller,                // ZoomerControoller To Control Zoomer
-            this.height,                    // Height
-            this.width,                     // Width 
-            this.background,                // background of Zoomer. It is BoxDecoration.
-            this.maxScale = 2.0,            // maximum Scale
-            this.minScale = 0.5,            // mininum Scale
-            this.enableTranslation = false, // Want to move it by touch
-            this.enableRotation = false,    // Want to rotate it
-            this.clipRotation = true});     // Clips the Rotation to 90-degrees
+1. MusicSlider Class
+      ```
+      MusicSlider({
+      @required this.controller,                                 // Give MusicSliderController To Control MusicSlider
+      this.height,                                               // Height
+      this.width,                                                // Width
+      this.division=30,                                          // Total Number Of Music Bars(Division). Very High Count May Decrease Performance
+      this.boxSpace=0.3,                                         // Space Between To Bars ( 0 = No Space, 1 = Full Space)
+      this.wave,                                                 // Wave Function To Draw Music Bars
+      this.animateWaveByTime = true,                             // Want To Animate It?
+      this.tickCount = const Duration(milliseconds: 200),        // Animation Duration between Two Frames
+      this.fullBoxFill = true,                                   // Want To Fill Entire Box? If false then Box Fill According To Precise Value
+      this.detectGesture=true,                                   // Let user Touch and slide It or not ?
+      this.fillColors=const [Colors.red],                        // Fill or Active Bar Colors
+      this.emptyColors=const [Colors.blue],                      // Empty or Inactive Bar Colors
+      this.initialTime = 0.0                                     // Initial Time For Animation when Starts
+      });
+      ```
 
 2. ZoomerController Class
 
           ZoomerController({initialScale = 1.0})  //To Set initial Scale
           
-    * APIs
-    
-      - double get scale              
-      ```scale = _controller.scale```
-      
-      - set setScale(double value)    
-       ```_controller.setScale = 1.5```
-       
-      - Offset get offset             
-      ```offset = _controller.offset```
-      
-      - set setOffset(Offset value)   
-       ```_controller.setOffset = Offset(0,10)```
-       
-      - double get rotation           
-      ```rotation = _controller.rotation```
-      
-      - set setRotation(double value)               
-      ```_controller.setRotation = pi/4```
-      **Note: Rotation is in Radians**    
-      
-      - onZoomStart()             
-      ```_controller.onZoomStart( (){ print( _controller.scale ); } )```
-
-      - onZoomUpdate()             
-      ```_controller.onZoomUpdate( (){ print( _controller.scale ); } )```
-
-      - onZoomEnd()             
-      ```_controller.onZoomEnd( (){ print( _controller.scale ); } )```
-
 ## Example
 
-```class _HomeState extends State<Home> {
-  ZoomerController _zoomerController = ZoomerController(initialScale: 1.0);
-  String _zoomDetails = "Zoom";  
+```
+class _HomeState extends State<Home> {
+  MusicSliderController _sliderController = MusicSliderController();
 
   @override
   Widget build(BuildContext context) {
 
-    _zoomerController.onZoomUpdate((){
-      setState(() {
-        _zoomDetails = "Scale = "+ _zoomerController.scale.toStringAsFixed(2);
-        _zoomDetails += "\nRotation = "+ _zoomerController.rotation.toStringAsFixed(2);
-        _zoomDetails += "\nOffset = ("+ _zoomerController.offset.dx.toStringAsFixed(2)+","+_zoomerController.offset.dy.toStringAsFixed(2)+")";
-      });
-    });
-
     return Scaffold(
-      appBar: AppBar(title: Text("Zommer Example"),),
-      body:
-        Center(child:
-        Stack(
+      appBar: AppBar(title: Text("MusicSlider Example"),),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Align(alignment: Alignment.topCenter,child: SizedBox(height: 150,child: Text(_zoomDetails,textAlign: TextAlign.center,style: TextStyle(fontSize: 30),))),
-            Center(
-              child: 
-                Zoomer(
-                  enableTranslation: true,
-                  enableRotation: true,
-                  clipRotation: true,
-                  maxScale: 2,
-                  minScale: 0.5,
-                  background:BoxDecoration(color: Colors.white),
-                  height: 300,
-                  width: 300,
-                  controller: _zoomerController,
-                  child: Container(decoration: BoxDecoration(color: Colors.green),height: 200,width: 200,child: FlutterLogo(),)),
-            ),
-          ])),
-    );
+            Padding(padding: EdgeInsets.all(10),
+            
+              child: MusicSlider(
+                emptyColors: [Colors.blue],
+                fillColors: [Colors.red],
+                controller: _sliderController,
+                animateWaveByTime: false,
+                height: 50,
+                division: 53,
+                wave: (x,t,a) => a*sin(x*0.3-t*0.3)*sin(x*0.3+t*0.3),),),
+            
+            Padding(padding: EdgeInsets.all(10),child: MusicSlider(emptyColors: [Colors.white],fillColors: [Colors.purple,Colors.blue.shade200,Colors.blue,Colors.green,Colors.yellow,Colors.orange,Colors.red],controller: MusicSliderController(initialValue: 0.5),animateWaveByTime: false,height: 50,division: 53,wave: (x,t,a) => a*cos(x*0.5)*sin(x*0.3),),),
+            Padding(padding: EdgeInsets.all(10),child: MusicSlider(emptyColors: [Colors.grey],fillColors: [Colors.purple],controller: MusicSliderController(initialValue: 0.2),animateWaveByTime: true,height: 50,division: 53,wave: (x,t,a) => a*sin(x*0.3-t*0.3),),),
+            Padding(padding: EdgeInsets.all(10),child: MusicSlider(emptyColors: [Colors.blue],fillColors: [Colors.green],controller: MusicSliderController(initialValue: 0.2),animateWaveByTime: true,height: 50,division: 53,wave: (x,t,a) => a*sin(x*0.3-t*0.3)*sin(x*0.3+t*0.3),),),
+            Padding(padding: EdgeInsets.all(10),child: MusicSlider(emptyColors: [Colors.green],fillColors: [Colors.cyan],controller: MusicSliderController(initialValue: 0.2),animateWaveByTime: false,height: 50,division: 11,wave: (x,t,a) => a*sin(x*0.3-t*0.3)*sin(x*0.3+t*0.3),),),
+            Padding(padding: EdgeInsets.all(10),child: MusicSlider(emptyColors: [Colors.blue],fillColors: [Colors.red],controller: MusicSliderController(initialValue: 0.2),animateWaveByTime: false,height: 50,division: 11,wave: (x,t,a) => a*sin(x*0.3-t*0.3)*sin(x*0.3+t*0.3),fullBoxFill: false,),),
+            RaisedButton(onPressed: (){setState(() { });})
+          ]))
+      );
   }
 }
 ```
