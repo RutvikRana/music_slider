@@ -37,13 +37,14 @@ Follow Installation guide of Pub.dev
       this.initialTime = 0.0                                     // Initial Time For Animation when Starts
       });
       ```
-* Important Points
-      - You have to give Controller
-      - Give boxSpace 1.0 if you dont want to space in between bars
-      - fullBoxFill = false allows to filling by precise value (eg. Not Like Default Filling Entire Box With Color)
-      - Make detectGesture = false if you are making ProgressBar
-      - You can give any numbers of colors to active/ inactive portion. It will Cycles the List.
-      - Dont Forget to make animateWaveByTime = false if you Dont want animated Slider (eg No Time Included In Wavw Function)
+      
+#### Important Points:
+      * You have to give Controller
+      * Give boxSpace 1.0 if you dont want to space in between bars
+      * fullBoxFill = false allows to filling by precise value (eg. Not Like Default Filling Entire Box With Color)
+      * Make detectGesture = false if you are making ProgressBar
+      * You can give any numbers of colors to active/ inactive portion. It will Cycles the List.
+      * Dont Forget to make animateWaveByTime = false if you Dont want animated Slider (eg No Time Included In Wavw Function)
 
 ### Wave Function
     ```wave: (x,t,a) => a*sin(x*0.3-t*0.3)*sin(x*0.3+t*0.3)```
